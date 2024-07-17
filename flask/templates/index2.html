@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Blog Posts</h1>
+    <div>
+        {% for post in posts %}
+        <h2>{{ post[1] }}</h2>
+        <p>{{ post[2] }}</p>
+        <hr>
+        {% endfor %}
+    </div>
+    <a href="{{ url_for('create') }}">Create Blog</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="{{ url_for('index') }}">View blog Posts</a>
+</body>
+</html>

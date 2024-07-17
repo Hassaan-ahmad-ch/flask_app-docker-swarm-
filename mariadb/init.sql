@@ -1,0 +1,16 @@
+-- init.sql
+CREATE TABLE IF NOT EXISTS blog_posts (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  title VARCHAR(255) NOT NULL,
+  content TEXT NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY username (username)
+);
+

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Blog Posts</h1>
+    <div>
+        {% for post in posts %}
+        <h2>{{ post[1] }}</h2>
+        <p>{{ post[2] }}</p>
+        <hr>
+        {% endfor %}
+    </div>
+
+    <!-- Conditional display for navigation links -->
+    {% if 'logged_in' in session %}
+        <a href="{{ url_for('create') }}">Create Blog</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Sign Up</a>
+    {% endif %}
+</body>
+</html>
