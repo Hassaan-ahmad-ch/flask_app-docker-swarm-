@@ -2,57 +2,51 @@ version: '3.8'
 
 services:
   nginx-proxy:
-    build: nginx
-    restart: always
+    image: hassaan2024/flask-v1:nginx-proxy-v1
+    deploy:
+      restart_policy:
+        condition: on-failure
     volumes:
       - ./nginx/default.conf:/tmp/default.conf
     environment:
       - FLASK_SERVER_ADDR=flask-app:8000
     ports:
       - "80:80"
-      - "443:443" 
+      - "443:443"
     depends_on:
       - flask-app
-    healthcheck:
-      test: ["CMD-SHELL", "curl --silent --fail localhost:80/health-check || exit 1"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
     command: /app/start.sh
 
   flask-app:
-    build: flask
-    restart: always  
+    image: hassaan2024/flask-v1:flask-app-v1
+    deploy:
+      restart_policy:
+        condition: on-failure
     ports:
       - '8000:8000'
     depends_on:
       - mariadb
-    healthcheck:
-      test: ["CMD-SHELL", "curl --silent --fail localhost:8000/flask-health-check || exit 1"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
     command: gunicorn -w 3 -t 60 -b 0.0.0.0:8000 app:app
     environment:
       - MYSQL_HOST=mariadb
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root_password
       - MYSQL_DATABASE=blog
+      - MYSQL_PORT=3306  
 
   mariadb:
-    build:
-      context: ./mariadb
-      dockerfile: Dockerfile
+    image: hassaan2024/flask-v1:mariadb-v1
+    deploy:
+      restart_policy:
+        condition: on-failure
     environment:
       - MYSQL_ROOT_PASSWORD=root_password
       - MYSQL_DATABASE=blog
+      - MYSQL_PORT=3306  
+    ports:
+      - '3306:3306'
     volumes:
       - mariadb_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
 
 volumes:
   mariadb_data:
