@@ -1,4 +1,3 @@
-# Dockerfile for MariaDB
 FROM mariadb:latest
 
 ENV MYSQL_ROOT_PASSWORD=root_password

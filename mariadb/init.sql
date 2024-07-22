@@ -1,4 +1,4 @@
--- init.sql
+
 CREATE TABLE IF NOT EXISTS blog_posts (
   id INT(11) NOT NULL AUTO_INCREMENT,
   title VARCHAR(255) NOT NULL,
